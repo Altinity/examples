@@ -1,0 +1,21 @@
+{
+  "name": "clickhouse_and_kafka",
+  "version": "1.0.0",
+  "main": "producer.js",
+  "description": "A sample application to put messages on a Kafka topic",
+  "scripts": {
+    "start": "node producer.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Altinity/examples.git"
+  },
+  "keywords": ["kafka"],
+  "author": "Doug Tidwell",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "kafka-node": "^5.0.0",
+    "yargs": "^17.7.2"
+  }
+}

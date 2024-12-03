@@ -15,7 +15,6 @@
   "author": "Doug Tidwell",
   "license": "Apache-2.0",
   "dependencies": {
-    "kafka-node": "^5.0.0",
-    "yargs": "^17.7.2"
+    "kafka-node": "^5.0.0"
   }
 }

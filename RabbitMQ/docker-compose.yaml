@@ -1,0 +1,24 @@
+---
+#version: "3.6" This is deprecated for newer docker versions
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      #- ./conf.d:/etc/rabbitmq/conf.d
+      - ./data/:/var/lib/rabbitmq/
+      - ./log/:/var/log/rabbitmq
+    networks:
+      - altinity_default
+
+networks:
+  altinity_default:
+    external: true
+
+# Don't need to enable the management plugin using the *-management image enables it by default
+# rabbitmq-plugins enable rabbitmq_*** plugins
+

@@ -4,5 +4,5 @@ We use this repo to publish sample code from articles in the [Altinity Blog](htt
 
 ## Table of Contents
 
-* [Using the AvroConfluent format with ClickHouse](AvroConfluent/README-AVRO.md) - Apache Avro is a row-oriented data serialization framework developed within Apache’s Hadoop project. ClickHouse can read and write Avro files. 
+* [Using the AvroConfluent format with ClickHouse](AvroConfluent/README.md) - Apache Avro is a row-oriented data serialization framework developed within Apache’s Hadoop project. ClickHouse can read and write Avro files. 
 * [Connecting Clickhouse® and Kafka®](clickhouse_and_kafka/README.md)  - Shows how to connect a ClickHouse cluster to a Kafka topic. 

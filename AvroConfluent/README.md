@@ -34,7 +34,7 @@ In our case we used Redpanda broker, because it is Kafka API compatible it bring
 
 ## Helpers
 
-To allow a basic testing environment I created a couple of simple python scripts, to avro serialize & publish messages to a Kafka topic, and another to serialize basic avro messages in a file. You can check them in the [helpers]() folder. They are easy to use, simply change the global variables in capitals to your use case and you're good to go.
+To allow a basic testing environment I created a couple of simple python scripts, to avro serialize & publish messages to a Kafka topic, and another to serialize basic avro messages in a file. You can check them in the [helpers](https://github.com/Altinity/examples/tree/main/AvroConfluent/helpers) folder. They are easy to use, simply change the global variables in capitals to your use case and you're good to go.
 
 ## Simple sensor example
 

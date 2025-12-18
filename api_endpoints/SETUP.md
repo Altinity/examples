@@ -9,18 +9,18 @@ Getting your interactive taxi data dashboard up and running quickly
 
 ## Step 0: Sign up for an Altinity.Cloud account
 
-If you don't have one already, you can sign up for a free trial account. [See the Altinity docs site for the details.](https://docs.altinity.com/altinitycloud/quickstartguide/createaccount/)
+If you don't have one already, you can sign up for a free trial account. [See the Altinity docs site for the details](https://docs.altinity.com/altinitycloud/quickstartguide/createaccount/).
 
 ## Step 1: Create a ClickHouse® Cluster in Altinity Cloud Manager
 
-1. Log into Altinity Cloud Manager (ACM) 
+1. Log into Altinity Cloud Manager (ACM).
 2. Go to the Clusters view and click the **LAUNCH CLUSTER** button at the top of the page. (Complete instructions are on the [Creating a New Cluster page](https://docs.altinity.com/altinitycloud/quickstartguide/clusterfirsttime/).)
 3. Give your new cluster a name and click the **LAUNCH** button. 
-4. Wait for your cluster to provision (~5 minutes)
+4. Wait for your cluster to provision (~5 minutes).
 
 ## Step 2: Load NYC Taxi Data
 
-1. In the ACM, go to your cluster, click the **EXPLORE** button, then go to the [Query tab](https://docs.altinity.com/altinitycloud/userguide/cluster-explorer/query-tab/)  
+1. In the ACM, go to your cluster, click the **EXPLORE** button, then go to the [Query tab](https://docs.altinity.com/altinitycloud/userguide/cluster-explorer/query-tab/).
 2. Copy and paste this entire SQL statement:
 
 ```sql
@@ -108,18 +108,18 @@ The table should have 265 rows.
 ## Step 3: Create API Endpoints
 
 1. In the ACM, go to your cluster and go to the [API Endpoints tab](https://docs.altinity.com/altinitycloud/userguide/cluster-explorer/api-endpoints-tab/). 
-2. Click the **IMPORT** button at the top  
-3. Click the **UPLOAD JSON FILE** button at the top and upload the `api-endpoints.json` file from this package  
-4. Wait ~30 seconds for the cluster configuration to update  
-5. Verify that the endpoints are defined (you should see three: `/rush-hour`, `/tips`, `/routes`)
+2. Click the **IMPORT** button at the top.
+3. Click the **UPLOAD JSON FILE** button at the top and upload the `api-endpoints.json` file from this package.
+4. Wait ~30 seconds for the cluster configuration to update.
+5. Verify that the endpoints are defined (you should see three: `/rush-hour`, `/tips`, `/routes`).
 
 ## Step 4: Configure the Dashboard
 
 1. Get your cluster connection details:  
      
-   - In the ACM, go to your cluster and click [the Connection Details link](https://docs.altinity.com/altinitycloud/userguide/configuring-a-cluster/configuring-connections/)  
-   - Copy the HTTPS endpoint URL (it'll be something like `https://username:password@your-cluster.altinity.cloud:8443`)  
-   - Note your username and password (if your username is `admin`, you really should [create a new user](https://docs.altinity.com/altinitycloud/userguide/configuring-a-cluster/managing-users/) with limited privileges for security purposes)
+   - In the ACM, go to your cluster and click [the Connection Details link](https://docs.altinity.com/altinitycloud/userguide/configuring-a-cluster/configuring-connections/).
+   - Copy the HTTPS endpoint URL (it'll be something like `https://username:password@your-cluster.altinity.cloud:8443`).  
+   - Note your username and password (if your username is `admin`, you really should [create a new user](https://docs.altinity.com/altinitycloud/userguide/configuring-a-cluster/managing-users/) with limited privileges for security purposes).
 
 2. Edit `vite.config.js` in the project root:
 

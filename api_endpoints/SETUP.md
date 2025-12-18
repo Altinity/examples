@@ -226,6 +226,8 @@ npm run dev -- --port 3000
 Your package should include:
 
 ```text
+├── .env.example - Sample credentials file 
+├── .gitignore - Don't commit .env, ./node_modules and other files
 ├── api-endpoints.json - API endpoint definitions 
 ├── docker-compose.yml - Docker setup 
 ├── docs - Various graphics:

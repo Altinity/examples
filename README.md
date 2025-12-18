@@ -6,5 +6,5 @@ We use this repo to publish sample code from articles in the [Altinity Blog](htt
 
 * [Connecting Clickhouse® and Kafka®](clickhouse_and_kafka/README.md)  - Shows how to connect a ClickHouse cluster to a Kafka topic. 
 * [Using ClickHouse and RabbitMQ](RabbitMQ/README.md) - How to use ClickHouse and RabbitMQ together. Includes a docker-compose file to get you started quickly.
-* [Building an analytics dashboard with API Endpoints](api_endpoints/README.md) - Create and populate a database with data, define API Endpoints for useful queries of that data, and create a web app that uses those API Endpoints to visualize the data.
+* [Visualizing NYC Taxi Data with API Endpoints](api_endpoints/README.md) - Create and populate a database with data, define API Endpoints for useful queries of that data, and create a web app that uses those API Endpoints to visualize the data.
 * [Using the AvroConfluent format with ClickHouse](AvroConfluent/README.md) - Apache Avro is a row-oriented data serialization framework developed within Apache’s Hadoop project. ClickHouse can read and write Avro files. 

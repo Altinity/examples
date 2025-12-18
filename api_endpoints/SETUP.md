@@ -64,7 +64,7 @@ SELECT * FROM url('https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripda
 
 3. Click **"Run"** and wait for the data to load (~2-5 minutes depending on network speeds and other factors). 
 
-**NOTE**: if you're running these statements in a cluster that uses replication, you'll get a warning message because you're not using the ReplicatedMergeTree engine. Ignore that message and proceed. The Altinity Cloud Manager can convert your table's engine to from MergeTree to ReplicatedMergeTree; see the aptly named page [Converting a Table's Engine to ReplicatedMergeTree](https://docs.altinity.com/altinitycloud/administratorguide/backing-up-and-restoring-data/converting-a-tables-engine-to-rmt/) for the details.  
+**NOTE**: if you're running these statements in a cluster that uses replication, you'll get a warning message because you're not using the ReplicatedMergeTree engine. Ignore that message and proceed. (You can use the ACM to convert your table's engine to ReplicatedMergeTree later if you want. See the aptly named page [Converting a Table's Engine to ReplicatedMergeTree](https://docs.altinity.com/altinitycloud/administratorguide/backing-up-and-restoring-data/converting-a-tables-engine-to-rmt/) for the details.)  
 
 4. Verify that the data loaded:
 
@@ -107,7 +107,7 @@ The table should have 265 rows.
 
 ## Step 3: Create API Endpoints
 
-1. In the ACM, go to your cluster, click the **EXPLORE** button, then go to the [API Endpoints tab](https://docs.altinity.com/altinitycloud/userguide/cluster-explorer/api-endpoints-tab/)  
+1. In the ACM, go to your cluster and go to the [API Endpoints tab](https://docs.altinity.com/altinitycloud/userguide/cluster-explorer/api-endpoints-tab/). 
 2. Click the **IMPORT** button at the top  
 3. Click the **UPLOAD JSON FILE** button at the top and upload the `api-endpoints.json` file from this package  
 4. Wait ~30 seconds for the cluster configuration to update  
@@ -123,8 +123,7 @@ The table should have 265 rows.
 
 2. Edit `vite.config.js` in the project root:
 
-    - Find the line   
-      `target: 'https://mycluster.myenv.altinity.cloud:8443'`   
+    - Find the line `target: 'https://mycluster.myenv.altinity.cloud:8443'`   
       and replace the value with your cluster URL *without `userid:password`*. We'll define those values in an `.env` file next.
 
 3. Create an `.env` file from the example file:  
@@ -233,7 +232,7 @@ Your package should include:
 │   ├── clock.png
 │   ├── dollar_sign.png
 │   ├── hottest_routes.png
-│   ├── mappin.png
+│   ├── map_pin.png
 │   ├── rush_hour_analysis.png
 │   └── tip_destination_by_distance.png
 ├── index.html - HTML template  

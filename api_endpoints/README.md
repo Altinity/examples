@@ -24,7 +24,7 @@ This dashboard provides three interactive queries with dynamic visualizations:
 - Insights into how tipping behavior varies with trip length  
 - Filterable by distance brackets
 
-### ![](docs/mappin.png) Hottest Routes
+### ![](docs/map_pin.png) Hottest Routes
 
 ![](docs/hottest_routes.png)
 

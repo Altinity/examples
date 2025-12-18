@@ -19,7 +19,7 @@ const authenticatedFetch = async (url) => {
 
 const TaxiDashboard = () => {
   // State for Query 1: Rush Hour Distribution
-  const [timeRange, setTimeRange] = useState({ start: 17, end: 18 });
+  const [timeRange, setTimeRange] = useState({ start: 16, end: 20 });
   const [rushHourData, setRushHourData] = useState(null);
   
   // State for Query 2: Tip Percentage by Distance
@@ -162,11 +162,11 @@ const TaxiDashboard = () => {
             letterSpacing: '-0.02em',
             textShadow: '0 0 40px rgba(0, 212, 255, 0.3)'
           }}>
-            NYC TAXI PULSE
+            NYC TAXI ANALYTICS
           </h1>
           <p style={{
             fontSize: '1.1rem',
-            color: '#8892a0',
+            color: '#FFC107',
             margin: 0,
             fontWeight: 400,
             letterSpacing: '0.05em'

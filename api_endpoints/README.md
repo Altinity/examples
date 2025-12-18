@@ -1,4 +1,4 @@
-# Visualizing NYC Taxi Data with API Endpoints 🚕⚡
+# Visualizing NYC Taxi Data with API Endpoints 🚕
 
 An interactive, real-time analytics dashboard for NYC Taxi & Limousine Commission data, powered by Altinity.Cloud ClickHouse API Endpoints.
 
@@ -77,5 +77,7 @@ The dashboard:
 
 NOTE: This demo uses `GET`, but you can create endpoints that use the `POST` and `DELETE` verbs as well.
 
-See [the Altinity.Cloud API Endpoints documentation](https://docs.altinity.com/altinitycloud/userguide/cluster-explorer/api-endpoints-tab/) for all the details. 
+## ⚡ Getting Started
+
+See [the setup instructions](./SETUP.md) to get up and running quickly. For complete details on API Endpoints, see [the Altinity.Cloud API Endpoints documentation](https://docs.altinity.com/altinitycloud/userguide/cluster-explorer/api-endpoints-tab/). 
 

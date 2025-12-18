@@ -1,4 +1,4 @@
-# NYC Taxi Pulse 🚕⚡
+# Visualizing NYC Taxi Data with API Endpoints 🚕⚡
 
 An interactive, real-time analytics dashboard for NYC Taxi & Limousine Commission data, powered by Altinity.Cloud ClickHouse API Endpoints.
 

@@ -1,6 +1,6 @@
-# NYC Taxi Dashboard - Complete Setup Guide
+# NYC Taxi Dashboard - Complete Setup Guide 🚕
 
-Get your interactive taxi data dashboard running in 15 minutes!
+Getting your interactive taxi data dashboard up and running quickly
 
 ## Prerequisites
 
@@ -13,8 +13,6 @@ If you don't have one already, you can sign up for a free trial account. [See th
 
 ## Step 1: Create a ClickHouse® Cluster in Altinity Cloud Manager
 
-**Rewrite this for the quick cluster wizard**
-
 1. Log into Altinity Cloud Manager (ACM) 
 2. Go to the Clusters view and click the **LAUNCH CLUSTER** button at the top of the page. (Complete instructions are on the [Creating a New Cluster page](https://docs.altinity.com/altinitycloud/quickstartguide/clusterfirsttime/).)
 3. Give your new cluster a name and click the **LAUNCH** button. 
@@ -22,7 +20,7 @@ If you don't have one already, you can sign up for a free trial account. [See th
 
 ## Step 2: Load NYC Taxi Data
 
-1. In the ACM, go to your cluster → [**Cluster Explorer** → **Query** tab](https://docs.altinity.com/altinitycloud/userguide/cluster-explorer/query-tab/)  
+1. In the ACM, go to your cluster, click the **EXPLORE** button, then go to the [Query tab](https://docs.altinity.com/altinitycloud/userguide/cluster-explorer/query-tab/)  
 2. Copy and paste this entire SQL statement:
 
 ```sql
@@ -66,7 +64,7 @@ SELECT * FROM url('https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripda
 
 3. Click **"Run"** and wait for the data to load (~2-5 minutes depending on network speeds and other factors). 
 
-**NOTE**: if you're running these statements in a cluster without replication, you'll get a warning message because you're not using the ReplicatedMergeTree engine. Ignore that message and proceed. (The Altinity Cloud Manager can convert your table's engine to from MergeTree to ReplicatedMergeTree; see the aptly named page [Converting a Table's Engine to ReplicatedMergeTree](https://docs.altinity.com/altinitycloud/administratorguide/backing-up-and-restoring-data/converting-a-tables-engine-to-rmt/) for the details.)  
+**NOTE**: if you're running these statements in a cluster that uses replication, you'll get a warning message because you're not using the ReplicatedMergeTree engine. Ignore that message and proceed. The Altinity Cloud Manager can convert your table's engine to from MergeTree to ReplicatedMergeTree; see the aptly named page [Converting a Table's Engine to ReplicatedMergeTree](https://docs.altinity.com/altinitycloud/administratorguide/backing-up-and-restoring-data/converting-a-tables-engine-to-rmt/) for the details.  
 
 4. Verify that the data loaded:
 
@@ -109,7 +107,7 @@ The table should have 265 rows.
 
 ## Step 3: Create API Endpoints
 
-1. In the ACM, go to your cluster → [**Cluster Explorer** → **API Endpoints** tab](https://docs.altinity.com/altinitycloud/userguide/cluster-explorer/api-endpoints-tab/)  
+1. In the ACM, go to your cluster, click the **EXPLORE** button, then go to the [API Endpoints tab](https://docs.altinity.com/altinitycloud/userguide/cluster-explorer/api-endpoints-tab/)  
 2. Click the **IMPORT** button at the top  
 3. Click the **UPLOAD JSON FILE** button at the top and upload the `api-endpoints.json` file from this package  
 4. Wait ~30 seconds for the cluster configuration to update  
@@ -119,15 +117,15 @@ The table should have 265 rows.
 
 1. Get your cluster connection details:  
      
-   - In the ACM, go to your [cluster → **"Connection Details"**](https://docs.altinity.com/altinitycloud/userguide/configuring-a-cluster/configuring-connections/)  
-   - Copy the HTTPS endpoint URL (it'll be something like: `https://username:password@your-cluster.altinity.cloud:8443`)  
+   - In the ACM, go to your cluster and click [the Connection Details link](https://docs.altinity.com/altinitycloud/userguide/configuring-a-cluster/configuring-connections/)  
+   - Copy the HTTPS endpoint URL (it'll be something like `https://username:password@your-cluster.altinity.cloud:8443`)  
    - Note your username and password (if your username is `admin`, you really should [create a new user](https://docs.altinity.com/altinitycloud/userguide/configuring-a-cluster/managing-users/) with limited privileges for security purposes)
 
 2. Edit `vite.config.js` in the project root:
 
     - Find the line   
       `target: 'https://mycluster.myenv.altinity.cloud:8443'`   
-      and replace the value with your cluster URL. The URL should not include `userid:password`; we'll define those values in an `.env` file next.
+      and replace the value with your cluster URL *without `userid:password`*. We'll define those values in an `.env` file next.
 
 3. Create an `.env` file from the example file:  
      
@@ -143,7 +141,7 @@ The table should have 265 rows.
    VITE_CLICKHOUSE_PASSWORD=your_password_here  
 ```
 
-**Important:** Never commit your `.env` file to git! (The included `.gitignore` file includes `.env`.)
+**NOTE**: The included `.gitignore` file includes `.env`, so you don't have to worry about commiting it accidentally.
 
 ## Step 5: Run the Dashboard
 
@@ -207,18 +205,18 @@ npm run dev -- --port 3000
 
 ## Other things you might want to try
 
-**Customize the queries:**
+### Customize the queries:
 
 - Edit the API endpoint SQL in ACM  
 - Modify `src/taxi-dashboard.jsx` to change visualizations  
 - Add more endpoints for additional insights!
 
-**Add more data:**
+### Add more data:
 
 - Load additional months of taxi data  
 - Try other NYC TLC datasets (green taxis, FHV, etc.)
 
-**Extend the dashboard:**
+### Extend the dashboard:
 
 - Add time series charts  
 - Create geographic visualizations  

@@ -1,0 +1,218 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_CLICKHOUSE",
+      "label": "ClickHouse Datasource",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "vertamedia-clickhouse-datasource",
+      "pluginName": "Altinity plugin for ClickHouse"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "12.3.0"
+    },
+    {
+      "type": "datasource",
+      "id": "vertamedia-clickhouse-datasource",
+      "name": "Altinity plugin for ClickHouse",
+      "version": "3.4.8"
+    },
+    {
+      "type": "panel",
+      "id": "xychart",
+      "name": "XY Chart",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "vertamedia-clickhouse-datasource",
+        "uid": "${DS_CLICKHOUSE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-red",
+            "mode": "continuous-blues",
+            "seriesBy": "last"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 100,
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "pointShape": "square",
+            "pointSize": {
+              "fixed": 10
+            },
+            "pointStrokeWidth": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "show": "points"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 14,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "mapping": "manual",
+        "series": [
+          {
+            "color": {
+              "matcher": {
+                "id": "byName",
+                "options": "v"
+              }
+            },
+            "frame": {
+              "matcher": {
+                "id": "byIndex",
+                "options": 0
+              }
+            },
+            "x": {
+              "matcher": {
+                "id": "byName",
+                "options": "cx"
+              }
+            },
+            "y": {
+              "matcher": {
+                "id": "byName",
+                "options": "cy"
+              }
+            }
+          }
+        ],
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "adHocFilters": [],
+          "adHocValuesQuery": "",
+          "add_metadata": true,
+          "contextWindowSize": "10",
+          "datasource": {
+            "type": "vertamedia-clickhouse-datasource",
+            "uid": "${DS_CLICKHOUSE}"
+          },
+          "editorMode": "builder",
+          "extrapolate": false,
+          "format": "table",
+          "formattedQuery": "/* grafana dashboard='The Mandelbrot Set', user=0 */\nwith 0.01 as scale,\n     (-2, 0.5) as range_x,\n     (-1, 1) as range_y,\n     arrayMap(x-> x*scale, range((range_x.1/scale)::Int64, (range_x.2/scale)::Int64)) as xs,\n     arrayMap(y-> y*scale, range((range_y.1/scale)::Int64, (range_y.2/scale)::Int64)) as ys\nselect arrayJoin(ys) as cy,\n       arrayJoin(xs) as cx,\n       if( (arrayFold(z, i -> \n          (z.1*z.1 - z.2*z.2 + cx, 2*z.1*z.2 + cy,\n          if(z.1*z.1 + z.2*z.2>4 and z.3==0, i, z.3)),\n          range(1000), (0.0, 0.0, 0::UInt16)\n        ).3 as v1) == 0, 0, log(1+log(v1))) as v",
+          "interval": "",
+          "intervalFactor": 1,
+          "nullifySparse": false,
+          "query": "with 0.01 as scale,\n     (-2, 0.5) as range_x,\n     (-1, 1) as range_y,\n     arrayMap(x-> x*scale, range((range_x.1/scale)::Int64, (range_x.2/scale)::Int64)) as xs,\n     arrayMap(y-> y*scale, range((range_y.1/scale)::Int64, (range_y.2/scale)::Int64)) as ys\nselect arrayJoin(ys) as cy,\n       arrayJoin(xs) as cx,\n       if( (arrayFold(z, i -> \n          (z.1*z.1 - z.2*z.2 + cx, 2*z.1*z.2 + cy,\n          if(z.1*z.1 + z.2*z.2>4 and z.3==0, i, z.3)),\n          range(1000), (0.0, 0.0, 0::UInt16)\n        ).3 as v1) == 0, 0, log(1+log(v1))) as v",
+          "rawQuery": "with 0.01 as scale,\n     (-2, 0.5) as range_x,\n     (-1, 1) as range_y,\n     arrayMap(x-> x*scale, range((range_x.1/scale)::Int64, (range_x.2/scale)::Int64)) as xs,\n     arrayMap(y-> y*scale, range((range_y.1/scale)::Int64, (range_y.2/scale)::Int64)) as ys\nselect arrayJoin(ys) as cy,\n       arrayJoin(xs) as cx,\n       if( (arrayFold(z, i -> \n          (z.1*z.1 - z.2*z.2 + cx, 2*z.1*z.2 + cy,\n          if(z.1*z.1 + z.2*z.2>4 and z.3==0, i, z.3)),\n          range(1000), (0.0, 0.0, 0::UInt16)\n        ).3 as v1) == 0, 0, log(1+log(v1))) as v",
+          "refId": "A",
+          "round": "0s",
+          "skip_comments": true,
+          "useWindowFuncForMacros": true
+        }
+      ],
+      "title": "The Mandelbrot Set",
+      "type": "xychart"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "",
+          "value": ""
+        },
+        "includeAll": false,
+        "label": "ClickHouse Datasource",
+        "name": "DS_CLICKHOUSE",
+        "options": [],
+        "query": "vertamedia-clickhouse-datasource",
+        "refresh": 1,
+        "regex": "",
+        "type": "datasource"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "The Mandelbrot Set",
+  "uid": "mandelbrot-set",
+  "version": 1,
+  "weekStart": "",
+  "id": null
+}
+

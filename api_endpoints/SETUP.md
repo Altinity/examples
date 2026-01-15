@@ -18,53 +18,76 @@ If you don't have one already, you can sign up for a free trial account. [See th
 3. Give your new cluster a name and click the **LAUNCH** button. 
 4. Wait for your cluster to provision (~5 minutes).
 
-## Step 2: Load NYC Taxi Data
+## Step 2: Create the database and tables, then load the data
 
 1. In the ACM, go to your cluster, click the **EXPLORE** button, then go to the [Query tab](https://docs.altinity.com/altinitycloud/userguide/cluster-explorer/query-tab/).
-2. Copy and paste this entire SQL statement:
+2. Copy and paste these commands to create the new database, a table in that database, then load that table with data: 
 
 ```sql
 -- Create database  
 CREATE DATABASE IF NOT EXISTS maddie;
+```
 
--- Create table  
+```sql
+       -- Create table  
 CREATE TABLE maddie.taxi_local
 (
-    `VendorID` Nullable(Int32),
-    `tpep_pickup_datetime` Nullable(DateTime64(6)),
-    `tpep_dropoff_datetime` Nullable(DateTime64(6)),
-    `passenger_count` Nullable(Int64),
-    `trip_distance` Nullable(Float64),
-    `RatecodeID` Nullable(Int64),
-    `store_and_fwd_flag` Nullable(String),
-    `PULocationID` Nullable(Int32),
-    `DOLocationID` Nullable(Int32),
-    `payment_type` Nullable(Int64),
-    `fare_amount` Nullable(Float64),
-    `extra` Nullable(Float64),
-    `mta_tax` Nullable(Float64),
-    `tip_amount` Nullable(Float64),
-    `tolls_amount` Nullable(Float64),
-    `improvement_surcharge` Nullable(Float64),
-    `total_amount` Nullable(Float64),
-    `congestion_surcharge` Nullable(Float64),
-    `Airport_fee` Nullable(Float64),
-    `cbd_congestion_fee` Nullable(Float64)
+   `VendorID` Nullable(Int32),
+   `tpep_pickup_datetime` Nullable(DateTime64(6)),
+   `tpep_dropoff_datetime` Nullable(DateTime64(6)),
+   `passenger_count` Nullable(Int64),
+   `trip_distance` Nullable(Float64),
+   `RatecodeID` Nullable(Int64),
+   `store_and_fwd_flag` Nullable(String),
+   `PULocationID` Nullable(Int32),
+   `DOLocationID` Nullable(Int32),
+   `payment_type` Nullable(Int64),
+   `fare_amount` Nullable(Float64),
+   `extra` Nullable(Float64),
+   `mta_tax` Nullable(Float64),
+   `tip_amount` Nullable(Float64),
+   `tolls_amount` Nullable(Float64),
+   `improvement_surcharge` Nullable(Float64),
+   `total_amount` Nullable(Float64),
+   `congestion_surcharge` Nullable(Float64),
+   `Airport_fee` Nullable(Float64),
+   `cbd_congestion_fee` Nullable(Float64)
 )
-ENGINE = MergeTree
+ENGINE = ReplicatedMergeTree('/clickhouse/{cluster}/tables/{database}/{table}', '{replica}')
 ORDER BY tuple()
 SETTINGS index_granularity = 8192;
 
+-- Create the table for the boroughs and zone names
+CREATE TABLE maddie.taxi_zones
+(
+   `LocationID` Int32,
+   `Borough` String,
+   `Zone` String,
+   `service_zone` String
+)
+   ENGINE = ReplicatedMergeTree('/clickhouse/{cluster}/tables/{database}/{table}', '{replica}')
+ORDER BY LocationID  
+SETTINGS index_granularity = 8192;
+```
+
+3. Import the data
+
+Run these statements to load the tables: 
+
+```sql
 -- Load August-October 2025 data from Parquet files  
 INSERT INTO maddie.taxi_local   
 SELECT * FROM url('https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-{08,09,10}.parquet',  
     'Parquet'  
 );
+
+-- Load mapping from location IDs to borough names into the new table   
+INSERT INTO maddie.taxi_zones
+SELECT * FROM url(
+        'https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv',
+        'CSVWithNames'
+              );
 ```
-
-3. Click **"Run"** and wait for the data to load (~2-5 minutes depending on network speeds and other factors). 
-
-**NOTE**: if you're running these statements in a cluster that uses replication, you'll get a warning message because you're not using the ReplicatedMergeTree engine. Ignore that message and proceed. (You can use the ACM to convert your table's engine to ReplicatedMergeTree later if you want. See the aptly named page [Converting a Table's Engine to ReplicatedMergeTree](https://docs.altinity.com/altinitycloud/administratorguide/backing-up-and-restoring-data/converting-a-tables-engine-to-rmt/) for the details.)  
 
 4. Verify that the data loaded:
 
@@ -74,36 +97,11 @@ SELECT count() FROM maddie.taxi_local;
 
 The table should have roughly 12.25 million rows.
 
-5. We also need the `maddie.taxi_zones` table, which contains borough and zone names. You can load it with:
-
-```sql
--- Create the table for the boroughs and zone names
-CREATE TABLE maddie.taxi_zones
-(  
-    `LocationID` Int32,  
-    `Borough` String,  
-    `Zone` String,  
-    `service_zone` String  
-)  
-ENGINE = MergeTree
-ORDER BY LocationID  
-SETTINGS index_granularity = 8192;
-
--- Load mapping from location IDs to borough names into the new table   
-INSERT INTO maddie.taxi_zones
-SELECT * FROM url(
-    'https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv',
-    'CSVWithNames'
-);
-```
-
-6. Verify that the data loaded: 
-
 ```sql
 SELECT count() FROM maddie.taxi_zones;
 ```
 
-The table should have 265 rows. 
+As of this writing, the table has 265 rows. 
 
 ## Step 3: Create API Endpoints
 
@@ -136,7 +134,7 @@ The table should have 265 rows.
 4. Edit `.env` and add your credentials:  
 
 ```bash
-   VITE_CLICKHOUSE_USERNAME=should_not_be_admin  
+   VITE_CLICKHOUSE_USERNAME=your_username_here  
    VITE_CLICKHOUSE_PASSWORD=your_password_here  
 ```
 
@@ -175,23 +173,25 @@ Work with the controls on the page and watch the data update in real-time! Every
 - Check browser console for errors  
 - Verify API endpoints are created (takes ~30 seconds after creation)  
 - Test endpoints with curl:  
-  `curl 'https://USERNAME:PASSWORD@your-cluster:8443/rush-hour?start_time=16&end_time=20' --insecure`
-
-### Certificate errors
-
-- The Vite proxy (in `vite.config.js`) should handle self-signed certs  
-- Make sure you updated the proxy target URL to match your cluster
+  `curl 'https://USERNAME:PASSWORD@your-cluster:8443/rush-hour?start_time=16&end_time=20'`
 
 ### "Port 5173 in use"
 
-Kill the process:
+You can try the brute force approach and just kill the process:
 
 ```bash
 lsof -i :5173  
 kill -9 <PID>
 ```
 
-Or use a different port:
+Or use a different port. For example, if you want to use port 3000, you can change `docker-compose.yml`: 
+
+```bash
+    ports:
+      - "3000:5173"
+```
+
+If you're running this with local Node.js, you can specify the port on the command line: 
 
 ```bash
 npm run dev -- --port 3000
@@ -228,6 +228,7 @@ Your package should include:
 ```text
 ├── .env.example - Sample credentials file 
 ├── .gitignore - Don't commit .env, ./node_modules and other files
+├── AGENTS.md - Outlines the AI-guided development process 
 ├── api-endpoints.json - API endpoint definitions 
 ├── docker-compose.yml - Docker setup 
 ├── docs - Various graphics:

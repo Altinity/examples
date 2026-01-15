@@ -68,14 +68,12 @@ The dashboard queries NYC Taxi & Limousine Commission trip data from August-Octo
 
 The Altinity Cloud API Endpoints feature lets you run SQL statements via a traditional REST request. This web app:
 
-The dashboard:
-
 1. Constructs URLs based on values selected on the page 
 2. Fetches data from those URLs via your API endpoints 
 3. Parses JSON results 
 4. Updates visualizations in real-time
 
-NOTE: This demo uses `GET`, but you can create endpoints that use the `POST` and `DELETE` verbs as well.
+NOTE: This demo uses `GET`, but you can create endpoints that use the `POST` method as well.
 
 ## ⚡ Getting Started
 

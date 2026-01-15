@@ -7,9 +7,8 @@ export default defineConfig({
     host: true,
     proxy: {
       '/api': {
-        target: 'https://mycluster.myenv.altinity.cloud:8443',
+        target: 'https://my-cluster.my-environment.altinity.cloud:8443',
         changeOrigin: true,
-        secure: false, // This ignores SSL certificate errors
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },

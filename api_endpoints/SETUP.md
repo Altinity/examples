@@ -25,12 +25,12 @@ If you don't have one already, you can sign up for a free trial account. [See th
 
 ```sql
 -- Create database  
-CREATE DATABASE IF NOT EXISTS maddie;
+CREATE DATABASE IF NOT EXISTS maddie ON CLUSTER '{cluster}';
 ```
 
 ```sql
        -- Create table  
-CREATE TABLE maddie.taxi_local
+CREATE TABLE maddie.taxi_local ON CLUSTER '{cluster}'
 (
    `VendorID` Nullable(Int32),
    `tpep_pickup_datetime` Nullable(DateTime64(6)),
@@ -58,7 +58,7 @@ ORDER BY tuple()
 SETTINGS index_granularity = 8192;
 
 -- Create the table for the boroughs and zone names
-CREATE TABLE maddie.taxi_zones
+CREATE TABLE maddie.taxi_zones ON CLUSTER '{cluster}'
 (
    `LocationID` Int32,
    `Borough` String,

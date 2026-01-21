@@ -13,10 +13,5 @@
     "endpoint": "/routes",
     "method": "GET",
     "query": "SELECT pz.Zone as pickup, dz.Zone as dropoff, count() as trip_count, round(avg(trip_distance), 2) as avg_distance, round(avg(total_amount), 2) as avg_fare FROM maddie.taxi_local AS t JOIN maddie.taxi_zones AS pz ON t.PULocationID = pz.LocationID JOIN maddie.taxi_zones AS dz ON t.DOLocationID = dz.LocationID WHERE pz.Borough = {borough:String} AND t.PULocationID != t.DOLocationID GROUP BY pickup, dropoff ORDER BY trip_count DESC LIMIT {limit:UInt32} FORMAT JSON"
-  },
-  {
-    "endpoint": "/insert-sensor-data",
-    "method": "POST",
-    "query": "INSERT INTO maddie.sensor_data (time_stamp, temp, humidity, pressure, sensor) SELECT parseDateTimeBestEffort({time_stamp: String}), {temp: Float32}, {humidity: Float32}, {pressure: Float32}, {sensor: String}"
   }
 ]

@@ -231,7 +231,7 @@ Your package should include:
 ├── AGENTS.md - Outlines the AI-guided development process 
 ├── api-endpoints.json - API endpoint definitions 
 ├── docker-compose.yml - Docker setup 
-├── docs - Various graphics:
+├── images - Various graphics:
 │   ├── clock.png
 │   ├── dollar_sign.png
 │   ├── hottest_routes.png

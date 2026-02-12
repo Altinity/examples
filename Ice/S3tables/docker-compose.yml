@@ -1,0 +1,166 @@
+services:
+
+  etcd:
+    image: quay.io/coreos/etcd:v3.5.13
+    command: >
+      /usr/local/bin/etcd
+      --name s1
+      --data-dir=/etcd-data
+      --initial-advertise-peer-urls http://0.0.0.0:2380
+      --listen-peer-urls http://0.0.0.0:2380
+      --advertise-client-urls http://0.0.0.0:2379
+      --listen-client-urls http://0.0.0.0:2379
+      --initial-cluster s1=http://0.0.0.0:2380
+    environment:
+      ETCDCTL_API: "3"
+    volumes:
+      - etcd-data:/etcd-data
+    networks:
+      - demo-net
+    healthcheck:
+      test: [ "CMD", "/usr/local/bin/etcdctl", "--endpoints=http://127.0.0.1:2379", "endpoint", "health" ]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  ice-rest-catalog:
+    image: altinity/ice-rest-catalog:debug
+    container_name: ice-rest-catalog
+    depends_on:
+      etcd:
+        condition: service_healthy
+    ports:
+      - "5100:5000"             # host 5010, container 5000 -> avoids host 5000
+    working_dir: /etc/ice
+    environment:
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN
+      - AWS_REGION=$AWS_REGION
+    volumes:
+      - ./.ice-rest-catalog.yaml:/etc/ice/.ice-rest-catalog.yaml:ro
+      # - ~/.aws:/root/.aws:ro
+    command: [ "-c", "/etc/ice/.ice-rest-catalog.yaml" ]
+    networks:
+      - demo-net
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -qO- http://localhost:5001/readyz || exit 1" ]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+
+  clickhouse:
+    image: altinity/clickhouse-server:25.8.9.20496.altinityantalya
+    container_name: clickhouse
+    depends_on:
+      ice-rest-catalog:
+        condition: service_started
+    ports:
+      - "8123:8123"   # HTTP
+      - "9009:9009"   # gRPC (optional)
+    environment:
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN
+      - AWS_REGION=$AWS_REGION
+    volumes:
+      - ch-data:/var/lib/clickhouse
+      - ./clickhouse/config.d/iceberg.xml:/etc/clickhouse-server/config.d/iceberg.xml:ro
+      - ./clickhouse/users.d/default-user.xml:/etc/clickhouse-server/users.d/default-user.xml:ro
+    networks:
+      - demo-net
+
+  # ice CLI container with a shell instead of "ice" as entrypoint
+  ice-cli:
+    image: altinity/ice:debug    # or a specific tag, e.g. 0.10.0
+    container_name: ice-cli
+    depends_on:
+      ice-rest-catalog:
+        condition: service_started
+    stdin_open: true
+    tty: true
+    environment:
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN
+      - AWS_REGION=$AWS_REGION
+    # Override ENTRYPOINT ["ice"] with a long-lived shell
+    entrypoint: [ "/bin/sh", "-c" ]
+    command: [ "sleep infinity" ]
+    working_dir: /workspace
+    networks:
+      - demo-net
+    volumes:
+      # So 'ice' inside the container knows how to reach the catalog
+      - ./.ice.yaml:/workspace/.ice.yaml:ro
+
+  nimtable-db:
+    image: postgres:17
+    container_name: nimtable-db
+    environment:
+      POSTGRES_DB: nimtable_db
+      POSTGRES_USER: nimtable_user
+      POSTGRES_PASSWORD: nimtable_password
+    networks:
+      - demo-net
+    volumes:
+      - nimtable-db-data:/var/lib/postgresql/data
+
+  nimtable:
+    image: ghcr.io/nimtable/nimtable:nightly
+    container_name: nimtable
+    depends_on:
+      nimtable-db:
+        condition: service_started
+      ice-rest-catalog:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=jdbc:postgresql://nimtable-db:5432/nimtable_db
+      - JWT_SECRET=please-change-me
+    networks:
+      - demo-net
+    volumes:
+      - ./nimtable-config.yaml:/nimtable/config.yaml:ro
+
+  nimtable-web:
+    image: ghcr.io/nimtable/nimtable-web:nightly
+    container_name: nimtable-web
+    depends_on:
+      - nimtable
+    networks:
+      - demo-net
+    environment:
+      - JAVA_API_URL=http://nimtable:8182
+      - DATABASE_URL=postgresql://nimtable_user:nimtable_password@nimtable-db:5432/nimtable_db
+      - JWT_SECRET=please-change-me
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=admin
+    ports:
+      - "3000:3000"   # Nimtable UI
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    depends_on:
+      - clickhouse
+    networks:
+      - demo-net
+    ports:
+      - "3001:3000"   # Grafana UI
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      # Install the Altinity ClickHouse datasource plugin
+      - GF_PLUGINS_PREINSTALL=vertamedia-clickhouse-datasource
+    volumes:
+      - grafana-data:/var/lib/grafana
+
+volumes:
+  etcd-data:
+  ch-data:
+  nimtable-db-data:
+  grafana-data:
+
+networks:
+  demo-net: { }

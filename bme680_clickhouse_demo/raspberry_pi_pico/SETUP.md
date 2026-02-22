@@ -16,7 +16,7 @@ Connect BME680 to Pico WH as follows:
 BME680 Pin    →    Pico WH Pin
 ─────────────────────────────────
 VIN (3.3V)    →    3V3 (Pin 36)
-GND           →    GND (Pin 38)
+GND           →    GND (Pin 33)
 SCL           →    GP5 (Pin 7)
 SDA           →    GP4 (Pin 6)
 ```

@@ -64,7 +64,7 @@ This project was developed collaboratively between human expertise and AI assist
 
 Project Lead, Hardware Integration, Testing & Validation
 
-**Primary Areas of Contribution**:
+- **Primary Areas of Contribution**:
 
   ### Project Vision & Requirements
 

@@ -1,0 +1,6 @@
+# JetBrains IDEs
+/.idea/
+.ice-rest-catalog.yaml
+.ice.yaml
+.ice-local.yaml
+nimtable-config.yaml

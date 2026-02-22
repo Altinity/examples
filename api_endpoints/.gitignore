@@ -39,6 +39,7 @@ lerna-debug.log*
 
 # Vite
 .vite
+.vite.config.js
 dist-ssr
 *.local
 

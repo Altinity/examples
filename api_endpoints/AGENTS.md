@@ -4,7 +4,7 @@ This project was developed collaboratively between human expertise and AI assist
 
 ## Claude (Anthropic)
 - **Models Used**: Claude 3.5 Sonnet, Claude Sonnet 4
-- **Contribution Period**: [Your timeframe - 2025/2026?]
+- **Contribution Period**: December 2025 - January 2026
 - **Primary Areas of Contribution**:
 
   ### Application Development (~90% of codebase)
@@ -79,13 +79,13 @@ The project was built through an iterative, conversational approach:
 3. **Incremental Development**: AI generated code for each feature, human tested
 4. **Data Integration**: Collaborative design of SQL queries and API endpoints
 5. **Refinement**: Multiple iterations based on real-world testing and feedback
-6. **Documentation**: AI drafted docs, human validated and published
+6. **Documentation**: AI drafted docs, human rewrote, completed, and published docs
 
 ## Key Technical Decisions (Collaborative)
 
 ### Using GET for Data Insertion Demo
-- **Human**: Initially wanted to show POST for sensor data insertion
-- **AI**: Suggested GET for analytics queries was more appropriate
+- **Human**: Initially wanted to show both GET and POST 
+- **AI**: Suggested limiting scope to GET 
 - **Resolution**: Built entire demo with GET endpoints, saved POST for separate IoT demo
 
 ### Frontend Architecture
@@ -102,7 +102,7 @@ The project was built through an iterative, conversational approach:
 
 This demo showcases how AI can accelerate technical content creation:
 - **AI contribution**: Rapid prototyping, code generation, documentation scaffolding
-- **Human contribution**: Domain expertise, product knowledge, quality assurance, deployment
+- **Human contribution**: Domain expertise, product knowledge, rewriting and completing documentation, quality assurance, deployment
 - **Collaboration**: Fast iteration from concept to production-ready demo
 
 All AI-generated code was reviewed and tested by the human developer. The application runs in production and accurately represents Altinity Cloud Manager capabilities.

@@ -6,27 +6,27 @@ An interactive, real-time analytics dashboard for NYC Taxi & Limousine Commissio
 
 This dashboard provides three interactive queries with dynamic visualizations:
 
-### ![](docs/clock.png) Rush Hour Analysis
+### ![](images/clock.png) Rush Hour Analysis
 
-![](docs/rush_hour_analysis.png)
+![](images/rush_hour_analysis.png)
 
 - Interactive time window slider (adjustable start/end hours)  
 - Pie chart visualization showing percentage of rides during the time range you selected 
 - Real-time updates as you adjust the time range  
 - Displays total rides for the time range you selected
 
-### ![](docs/dollar_sign.png) Tip Distribution by Distance
+### ![](images/dollar_sign.png) Tip Distribution by Distance
 
-![](docs/tip_distribution_by_distance.png)
+![](images/tip_distribution_by_distance.png)
 
 - Adjustable distance range slider (min/max miles)  
 - Bar chart showing average tip percentage by trip distance  
 - Insights into how tipping behavior varies with trip length  
 - Filterable by distance brackets
 
-### ![](docs/map_pin.png) Hottest Routes
+### ![](images/map_pin.png) Hottest Routes
 
-![](docs/hottest_routes.png)
+![](images/hottest_routes.png)
 
 - Top N most popular pickup/dropoff location pairs for a given borough  
 - Adjustable borough name (Manhattan, Bronx, Brooklyn, Queens, Staten Island) and number of routes to display (5-25)  

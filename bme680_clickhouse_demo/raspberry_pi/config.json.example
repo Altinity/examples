@@ -3,5 +3,5 @@
   "sample_interval": 10,
   "sensor_name": "warehouse-01",
   "log_to_console": true,
-  "temp_adjustment": -0.0
+  "temp_adjustment": 0.0
 }

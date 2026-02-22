@@ -1,132 +1,83 @@
-# BME680 Sensor Data Logger for ClickHouse
+# Logging BME680 Sensor Data using ClickHouse Endpoints
 
-Stream temperature, humidity, and pressure data from a BME680 sensor on Raspberry Pi directly to ClickHouse for real-time IoT analytics.
+This project is a set of demos that show you how to use single-board computers (SBCs) to log temperature, humidity, and pressure data from a BME680 sensor to a ClickHouse endpoint for real-time IoT analytics.
 
 ## Overview
 
 This project demonstrates how to:
+
+- Set up a ClickHouse database, table, and an endpoint for an `INSERT` statement
+- Initialize an SBC and a BME sensor
 - Read environmental data from a BME680 sensor
-- Apply temperature calibration for sensor self-heating
-- Send data to ClickHouse via HTTP POST
-- Display system stats on an OLED screen (optional)
+- Send that data to ClickHouse via an authenticated `POST` request
 
 Perfect for building IoT dashboards, environmental monitoring systems, or learning about sensor integration with analytical databases.
 
-## What You'll Need
+## ClickHouse Table Schema
 
-### Hardware
-- Raspberry Pi (3 or newer recommended)
-- BME680 breakout board (we used Pimoroni BME680 Breakout)
-- MicroSD card (16GB+)
-- Optional: OLED display (e.g., UCTronics Pi Rack Pro with SH1106 displays)
+The examples here write data from the BME680 sensor to a ClickHouse database with this schema: 
 
-### Software
-- Raspberry Pi OS (64-bit with desktop)
-- Python 3.9+
-- ClickHouse cluster (we used Altinity Cloud Manager)
-
-## Quick Start
-
-1. **Clone this repository**
-```bash
-   git clone https://github.com/Altinity/bme680-clickhouse-demo.git
-   cd bme680-clickhouse-demo
+```sql
+CREATE TABLE maddie.sensor_data ON CLUSTER '{cluster}'
+(
+   time_stamp DateTime64(3),
+   temp Float32,
+   humidity Float32,
+   pressure Float32,
+   sensor String
+)
+ENGINE = ReplicatedMergeTree('/clickhouse/{cluster}/tables/maddie/sensor_data', '{replica}')
+ORDER BY tuple()
+SETTINGS index_granularity = 8192;
 ```
 
-2. **Follow the setup guide**
+## Subprojects
 
-   See [SETUP.md](SETUP.md) for detailed installation instructions.
+There are two versions of the code, each of which is a complete example: 
 
-3. **Configure your credentials**
-```bash
-   cp .env.example .env
-   cp config.json.example config.json
-   # Edit both files with your actual values
-```
-
-4. **Run the logger**
-```bash
-   source venv/bin/activate
-   python sensor_to_clickhouse.py
-```
+* [The Raspberry Pi version](raspberry_pi/README.md) - Runs on a Raspberry Pi, a Linux-based SBC.  
+* [The Raspberry Pi Pico version](raspberry_pi_pico/README.md) - Runs on a Raspberry Pi Pico, a microcontroller that runs [MicroPython](https://micropython.org/).
 
 ## Project Structure
 ```
-├── sensor_to_clickhouse.py  # Main data logger
-├── test_bme680.py           # Test sensor readings
-├── display_stats.py         # OLED stats display (optional)
-├── requirements.txt         # Python dependencies
-├── config.json.example      # Configuration template
-├── .env.example             # Credentials template
-├── .gitignore               # Don't commit .env and similar files to git
-└── docs                     # Additional documentation
-    ├── pinout.md            # Raspberry Pi pinout diagram
-    └── troubleshooting.md   # Troubleshooting guide
-
+├── README.md - this file
+├── images
+│   ├── pico_and_bme680.png - Pinout diagram for the Pico
+│   └── raspberry_pi_and_bme680.png - Pinout diagram for the Raspberry Pi
+│
+├── raspberry_pi - Using a Raspberry Pi to log data from a BME680 to a ClickHouse endpoint 
+│   ├── AGENTS.md - How this code was developed with AI
+│   ├── .env.example - Sample environment configuration file
+│   ├── config.json.example - Sample configuration file
+│   ├── jetson-requirements.txt - Python requirements file with old version numbers for the Jetson Nano
+│   ├── README.md - The README for this sub-project
+│   ├── requirements.txt - Python requirements file with up-to-date versions
+│   ├── sensor_to_clickhouse.py - The code that reads the sensor and writes data to ClickHouse
+│   ├── SETUP.md - How to set up the hardware and software
+│   └── test_bme680.py - A test script to make sure the BME680 is working
+│
+└── raspberry_pi_pico - Using a Raspberry Pi Pico to log data from a BME680 to a ClickHouse endpoint 
+    ├── AGENTS.md - How this code was developed with AI
+    ├── main.py - The code that reads the sensor and writes data to ClickHouse
+    ├── README.md - The README for this sub-project
+    └── SETUP.md - How to set up the hardware and software
 ```
-
-## Features
-
-### Temperature Calibration
-The BME680 runs warm and picks up heat from the Raspberry Pi. We apply a configurable offset (default: -10°C) to compensate.
-
-### Secure Authentication
-Credentials are stored in environment variables and never committed to git. Basic authentication headers are automatically generated.
-
-### Configurable Sampling
-Adjust the sampling interval via `config.json` without touching code.
-
-### OLED Integration
-Optional system stats display showing IP address, CPU usage, memory, and disk space.
-
-## ClickHouse Table Schema
-```sql
-CREATE TABLE demo.sensor_data
-(
-    time_stamp DateTime64(3),
-    temp Float32,
-    humidity Float32,
-    pressure Float32,
-    sensor String
-)
-ENGINE = MergeTree()
-ORDER BY (sensor, time_stamp);
-```
-
-## Configuration
-
-### config.json
-- `clickhouse_url`: Your ClickHouse HTTP endpoint
-- `sample_interval`: Seconds between readings (default: 60)
-- `sensor_name`: Unique identifier for this sensor
-- `log_to_console`: Enable/disable console output
-- `temp_adjustment` : Adjust the temperature for heat generated by the Raspberry Pi
-
-### .env
-- `SENSOR_API_USERNAME`: ClickHouse username
-- `SENSOR_API_PASSWORD`: ClickHouse password
-
-### Python Script
-- `TEMP_OFFSET_C`: Temperature calibration offset (line 23)
-
-## Troubleshooting
-
-See [docs/troubleshooting.md](docs/troubleshooting.md) for common issues and solutions.
 
 ## Blog Post
 
-This demo accompanies our blog post: [Building IoT Analytics with ClickHouse and Raspberry Pi](#)
+This demo accompanies our blog post: [Using Altinity.Cloud to Log Sensor Data with ClickHouse Endpoints](#)
+
+## Community
+
+This project is a demo created by Altinity to accompany the blog post [Using Altinity.Cloud to Log Sensor Data with ClickHouse Endpoints](#). The best way to reach us or ask questions about the code is:
+
+* Join [the Altinity Slack](https://altinity.com/slack) - Chat with the developers and other users 
+* Log [an issue on GitHub](https://github.com/Altinity/examples/issues) - Ask questions, log bugs and feature requests
 
 ## Contributing
 
-Found a bug? Have a suggestion? Open an issue or submit a pull request!
+We welcome contributions from the community! If you encounter issues or have improvements to suggest, please log an issue or submit a PR.
 
-## License
+## Legal
 
-MIT License - see LICENSE file for details
-
-## Acknowledgments
-
-- Built for [Altinity Cloud Manager](https://altinity.com)
-- Uses the excellent [bme680 Python library](https://github.com/pimoroni/bme680-python)
-- Inspired by the maker community's IoT projects
+All code, unless specified otherwise, is licensed under the Apache-2.0 license. Copyright ®2026 Altinity, Inc. Altinity.Cloud®, and Altinity Stable® are registered trademarks of Altinity, Inc. ClickHouse® is a registered trademark of ClickHouse, Inc.; Altinity is not affiliated with or associated with ClickHouse, Inc. Kubernetes, MySQL, and PostgreSQL are trademarks and property of their respective owners.

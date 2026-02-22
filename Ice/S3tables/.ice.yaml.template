@@ -1,3 +1,0 @@
-uri: http://ice-rest-catalog:5000
-bearerToken: ${ICE_BEARER_TOKEN}
-httpCacheDir: data/ice/http/cache

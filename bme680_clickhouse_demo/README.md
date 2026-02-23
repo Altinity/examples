@@ -58,6 +58,7 @@ There are two versions of the code, each of which is a complete example:
 │
 └── raspberry_pi_pico - Using a Raspberry Pi Pico to log data from a BME680 to a ClickHouse endpoint 
     ├── AGENTS.md - How this code was developed with AI
+    ├── config.example.py - Sample environment configuration file
     ├── main.py - The code that reads the sensor and writes data to ClickHouse
     ├── README.md - The README for this sub-project
     └── SETUP.md - How to set up the hardware and software

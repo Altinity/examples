@@ -1,19 +1,19 @@
 # main.py - BME680 to ClickHouse on Raspberry Pi Pico WH
+try:
+    from config import *
+except ImportError:
+    print("ERROR: config.py not found!")
+    print("Please copy config.example.py to config.py and add your credentials")
+    print("Make sure you NEVER save your credentials in config.example.py")
+    print("to ensure your credentials are never committed to git")
+    raise
+
 import network
 import urequests
 import time
-import ntptime
 from machine import Pin, I2C
-import bme680  # You'll need to copy this library too
-
-# ============ CONFIGURATION ============
-WIFI_SSID = "Wu-TangLAN"
-WIFI_PASSWORD = "7thChamber"
-CLICKHOUSE_URL = "https://example-cluster.altinity.cloud:8443/insert-sensor-data"
-CLICKHOUSE_USER = "demouser"
-CLICKHOUSE_PASSWORD = "demopassword"
-SENSOR_NAME = "warehouse-01"
-POST_INTERVAL = 60  # seconds between readings
+import bme680
+import ntptime
 
 # ============ WiFi SETUP ============
 def connect_wifi():

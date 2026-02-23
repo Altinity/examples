@@ -8,7 +8,6 @@ This project demonstrates how to:
 - Read environmental data from a BME680 sensor
 - Apply temperature calibration for sensor self-heating
 - Send data to ClickHouse via HTTP POST
-- Display system stats on an OLED screen (optional)
 
 Perfect for building IoT dashboards, environmental monitoring systems, or learning about sensor integration with analytical databases.
 
@@ -18,7 +17,6 @@ Perfect for building IoT dashboards, environmental monitoring systems, or learni
 - Raspberry Pi (3 or newer recommended)
 - BME680 breakout board (we used Pimoroni BME680 Breakout)
 - MicroSD card (16GB+)
-- Optional: OLED display (e.g., UCTronics Pi Rack Pro with SH1106 displays)
 
 ### Software
 - Raspberry Pi OS (64-bit with desktop)

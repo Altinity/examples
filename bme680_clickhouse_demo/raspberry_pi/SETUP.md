@@ -132,20 +132,16 @@ This setup also works on:
 
 3. **In OS Customization Settings:**
 
-   **General Tab:**
-
-   - Set hostname (e.g., `sensor-pi`)
-   - Username: `demouser`
-   - Password: `demopassword` (or your chosen password)
-   - Configure WiFi (SSID and password)
-   - Set locale settings and timezone
-
-
-**Services Tab:**
-
-- ✅ Enable SSH
-- Choose "Use password authentication"
-- ⚠️ No need to enable Raspberry Pi Connect
+   - **General Tab**
+     - Set hostname (e.g., `sensor-pi`)
+     - Username: `demouser`
+     - Password: `demopassword` (or your chosen password)
+     - Configure WiFi (SSID and password)
+     - Set locale settings and timezone
+   - **Services Tab**
+     - ✅ Enable SSH 
+     - Choose "Use password authentication"
+     - ⚠️ No need to enable Raspberry Pi Connect
 
 4. **Write the Image:**
 
@@ -369,9 +365,9 @@ Update `config.json` with your settings:
 | `log_to_console` | Show console output for each reading | `true` |
 | `temp_adjustment` | Temperature offset in °C (see below) | `0.0` |
 
-**About `temp_adjustment`:**
+Get the `endpoint_url` from - get this from [the Cluster Connection Details link in the ACM](https://docs.altinity.com/altinitycloud/altinity-cloud-connections/clusteraccesspoint/).
 
-The BME680 runs warm and may pick up heat from the Raspberry Pi. If your readings are consistently higher than room temperature, adjust this value. For example, if the sensor reads 25°C but the actual temperature is 20°C, set `temp_adjustment` to `-5.0`.
+**About `temp_adjustment`:** The BME680 runs warm and may pick up heat from the Raspberry Pi. If your readings are consistently higher than room temperature, adjust this value. For example, if the sensor reads 25°C but the actual temperature is 20°C, set `temp_adjustment` to `-5.0`.
 
 ---
 
@@ -409,7 +405,7 @@ Press **Ctrl+C** to exit.
 
 ### 2. Test ClickHouse Connection
 
-Test with curl (replace with your actual URL and credentials):
+Test with `curl` (replace with your actual URL and credentials):
 
 ```shell
 curl -X POST \  
@@ -509,7 +505,7 @@ Log out and back in
 Solutions:
 
 1. Verify credentials in `.env`
-2. Test with curl using same credentials
+2. Test with `curl` using same credentials
 3. Check username has permissions in ACM
 
 **Problem: Connection timeouts**

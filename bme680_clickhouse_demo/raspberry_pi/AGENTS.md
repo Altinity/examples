@@ -48,7 +48,7 @@ This project was developed collaboratively between human expertise and AI assist
   ### Documentation (~60% of written docs)
     - Comprehensive `README.md` with project overview
     - Detailed `SETUP.md` with step-by-step installation instructions
-    - Troubleshooting guide (`docs/troubleshooting.md`)
+    - Troubleshooting guide used in `SETUP.md`
     - Configuration file templates and examples
     - Inline code comments and docstrings
 
@@ -110,7 +110,7 @@ This project was developed through iterative conversation between the human deve
 ### The POST API Endpoints Mystery
 
 Over several hours, human and AI systematically debugged why POST API Endpoints weren't working:
-- Tested curl commands vs Python requests
+- Tested `curl` commands vs Python requests
 - Isolated SSL, authentication, and network issues
 - Discovered parameter substitution failure
 - Found workaround using `INSERT INTO ... SELECT` syntax 

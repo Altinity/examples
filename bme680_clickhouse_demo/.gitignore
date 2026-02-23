@@ -16,6 +16,9 @@ __pycache__/
 *.so
 .Python
 
+# MicroPython secrets
+config.py
+
 # Distribution / packaging
 build/
 develop-eggs/

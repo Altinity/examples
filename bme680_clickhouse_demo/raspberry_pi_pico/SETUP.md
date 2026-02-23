@@ -56,27 +56,33 @@ The Pico needs the `bme680` library for MicroPython.
 
 ### Step 3: Configure the Logger
 
-Next, configure `main.py` with the appropriate values for your environment: 
+Copy the file `config.example.py` to `config.py` and set the appropriate values for your environment: 
 
 **Configuration Options:**
 * `WIFI_SSID` = SSID of your wifi network 
 * `WIFI_PASSWORD` = Your wifi network's password
-* `CLICKHOUSE_URL` = Something like `https://example-cluster.altinity.cloud:8443/insert-sensor-data` - get this from the Connections link 
+* `CLICKHOUSE_URL` = Something like `https://example-cluster.altinity.cloud:8443/insert-sensor-data` - get this from [the Cluster Connection Details link in the ACM](https://docs.altinity.com/altinitycloud/altinity-cloud-connections/clusteraccesspoint/)
 * `CLICKHOUSE_USER` = Your ClickHouse username
 * `CLICKHOUSE_PASSWORD` = Your ClickHouse password
 * `SENSOR_NAME` = A name for this sensor. `warehouse-01`, `loading-dock`, whatever you like
-* `POST_INTERVAL` = How many seconds the script should wait before reposting data. Default is `60`. 
+* `POST_INTERVAL` = How many seconds the script should wait before reposting data. Default is `60`.
+
+(The `.gitignore` file ensures that `config.py` won't be committed to your repo.)
 
 ### Step 4: Upload Files to Pico
 
 **Using Thonny:**
 1. Connect Pico to computer via USB
-2. Open `main.py` in Thonny
-3. Click "File" → "Save As"
-4. Choose "Raspberry Pi Pico"
-5. Save as `main.py`
+2. Navigate to the `examples/bme680_clickhouse_demo/raspberry_pi_pico` director
+3. Click "View" → "Files" to open the Files tab
+4. Select the `config.py` and `main.py` files
+5. Right-click on the selected files and choose "Upload to \\" on the menu
+6. Navigate to wherever you downloaded the `bme680.py` file in Thonny's Files tab
+7. Right-click on the `bme680.py` file and choose "Upload to \\" on the menu
 
-### Step 5: Test the Logger
+You should have the files `bme680.py`, `config.py`, and `main.py` on the Pico. 
+
+### Step 5: Run the Logger
 
 **Interactive Testing (via Thonny):**
 1. Open main.py from the Pico in Thonny
@@ -126,9 +132,8 @@ print(i2c.scan())  # Should show [0x77] or [0x76] for BME680
 
 ### ClickHouse POST Fails
 - Verify endpoint URL is correct
-- Test endpoint with curl from your computer first
+- Test endpoint with `curl` from your computer first
 - Check firewall/network settings
-- Verify API key if required
 
 ### Script Crashes on Boot
 - Connect via serial console to see error messages
@@ -157,15 +162,17 @@ print(i2c.scan())  # Should show [0x77] or [0x76] for BME680
 
 ## Additional Resources
 
-- **MicroPython Docs**: https://docs.micropython.org/
-- **Pico W Datasheet**: https://datasheets.raspberrypi.com/picow/pico-w-datasheet.pdf
-- **BME680 Datasheet**: https://www.bosch-sensortec.com/products/environmental-sensors/gas-sensors/bme680/
-- **Thonny Forum**: https://github.com/thonny/thonny/discussions
+- [MicroPython Docs](https://docs.micropython.org/)
+- [Pico W Datasheet](https://datasheets.raspberrypi.com/picow/pico-w-datasheet.pdf)
+- [BME680 Datasheet](https://www.bosch-sensortec.com/products/environmental-sensors/gas-sensors/bme680/) 
+- [Thonny Forum](https://github.com/thonny/thonny/discussions) 
 
-## Support
+## Next Steps
 
-If you run into issues:
-1. Check the serial console output for error messages
-2. Verify hardware connections with a multimeter
-3. Test WiFi and API endpoints independently
-4. Review the troubleshooting section above
+- For additional security:
+   - Configure the list of allowed IPs in the ACM
+   - Create a user account that only has access to one database
+- Monitor your data in ClickHouse
+- Build Grafana dashboards to visualize sensor readings
+- Add more sensors with different `sensor_name` values
+- Set up alerts for temperature thresholds

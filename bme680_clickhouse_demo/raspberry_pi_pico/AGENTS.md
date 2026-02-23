@@ -36,7 +36,7 @@ Development of a battery-powered IoT temperature sensor using a Raspberry Pi Pic
 
 **Resolution:** Identified that without soldering equipment at current location, the human should:
 1. Prototype using USB power from MacBook
-2. Solder PowerBoost components later at home
+2. Solder PowerBoost components later
 3. This actually improved the development workflow - test code with stable power first, add battery later
 
 **Learning:** Ask about hardware state rather than assuming. "Do you have a soldering iron available?" would have saved time.
@@ -242,7 +242,6 @@ def post_to_clickhouse(temp, humidity, pressure):
 3. **Ask about physical constraints early**
    - "Do you have soldering equipment?"
    - "What's the current state of your hardware?"
-   - "Are you working from home or traveling?"
 
 4. **Start simple, then optimize**
    - USB cable before direct pin connections

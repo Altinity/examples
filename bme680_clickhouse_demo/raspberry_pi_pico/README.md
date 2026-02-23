@@ -26,8 +26,8 @@ A lightweight MicroPython application for logging environmental data from a BME6
 1. **Flash MicroPython** to your Pico WH
 2. **Install BME680 library** (via Thonny or mpremote)
 3. **Wire the sensor** (see SETUP.md for pinout)
-4. **Configure** your WiFi and ClickHouse endpoint in `main.py`
-5. **Upload `main.py`** to Pico and reboot
+4. **Configure the script** - copy `config.example.py` to `config.py`and enter your credentials
+5. **Upload `main.py` and `config.py`** to Pico and reboot
 
 See [SETUP.md](SETUP.md) for detailed instructions.
 
@@ -36,6 +36,7 @@ See [SETUP.md](SETUP.md) for detailed instructions.
 ```
 raspberry_pi_pico/
 ├── AGENTS.md              # AI agent overview
+├── config.example.py      # Sample configuration file
 ├── main.py                # Main application code
 ├── README.md              # This file
 └── SETUP.md               # Detailed setup instructions
@@ -52,7 +53,8 @@ Simply power on the Pico - `main.py` runs automatically!
 ### Interactive Mode (via Thonny)
 
 1. Open `main.py` in Thonny IDE
-2. Press F5 to run
+2. Copy `config.example.py` to `config.py`, then edit `config.py` with your credentials
+2. Press F5 or click the Run button to run
 3. Monitor output in Shell panel
 4. Press Ctrl+C to stop
 
@@ -90,7 +92,7 @@ See [the Troubleshooting section of SETUP.md](SETUP.md/#troubleshooting) for com
 This code is designed to be similar to the Pi Zero 2 W version:
 
 - ✅ **Same loop structure**: read → post → sleep
-- ✅ **Similar HTTP API**: urequests mirrors requests library
+- ✅ **Similar HTTP API**: `urequests` mirrors requests library
 - ✅ **URL parameters**: Same approach, different library
 - ❌ **Different I2C init**: Machine-specific pin configuration
 - ❌ **WiFi setup**: Not needed on Pi (systemd handles it)
@@ -147,20 +149,9 @@ Improvements welcome! Common areas:
 
 ## Related Projects
 
-- **Pi Zero 2 W Version**: Full-featured Linux-based logger
-- **Jetson Nano Version**: High-performance edge AI integration
-- **ESP32 Version**: Alternative microcontroller platform
+- [Raspberry Pi version](../raspberry_pi/README.md): Full-featured Linux-based logger
+- Jetson Nano Version: High-performance edge AI integration
 
 ## Author
 
 Created for Altinity ClickHouse demos and IoT integration examples.
-
-## Changelog
-
-### v1.0.0 (2025-01-23)
-- Initial release
-- BME680 sensor support
-- WiFi connectivity
-- ClickHouse API integration
-- Deep sleep power optimization
-- Configurable hostname and settings

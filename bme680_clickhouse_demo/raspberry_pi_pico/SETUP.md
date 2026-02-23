@@ -73,7 +73,7 @@ Copy the file `config.example.py` to `config.py` and set the appropriate values 
 
 **Using Thonny:**
 1. Connect Pico to computer via USB
-2. Navigate to the `examples/bme680_clickhouse_demo/raspberry_pi_pico` director
+2. Navigate to the `examples/bme680_clickhouse_demo/raspberry_pi_pico` directory
 3. Click "View" → "Files" to open the Files tab
 4. Select the `config.py` and `main.py` files
 5. Right-click on the selected files and choose "Upload to \\" on the menu

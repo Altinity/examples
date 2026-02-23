@@ -53,10 +53,10 @@ Simply power on the Pico - `main.py` runs automatically!
 ### Interactive Mode (via Thonny)
 
 1. Open `main.py` in Thonny IDE
-2. Copy `config.example.py` to `config.py`, then edit `config.py` with your credentials
-2. Press F5 or click the Run button to run
-3. Monitor output in Shell panel
-4. Press Ctrl+C to stop
+2. Copy `config.example.py` to `config.py`, then edit `config.py` with your credentials 
+3. Press F5 or click the Run button to run 
+4. Monitor output in Shell panel 
+5. Press Ctrl+C to stop
 
 ## Data Format
 

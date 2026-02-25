@@ -66,11 +66,11 @@ There are two versions of the code, each of which is a complete example:
 
 ## Blog Post
 
-This demo accompanies our blog post: [Using Altinity.Cloud to Log Sensor Data with ClickHouse Endpoints](#)
+This demo accompanies our blog post: [Using Altinity.Cloud to Log Sensor Data with ClickHouse Endpoints](https://altinity.com/blog/using-altinity-cloud-to-log-sensor-data-with-clickhouse-endpoints)
 
 ## Community
 
-This project is a demo created by Altinity to accompany the blog post [Using Altinity.Cloud to Log Sensor Data with ClickHouse Endpoints](#). The best way to reach us or ask questions about the code is:
+This project is a demo created by Altinity to accompany the blog post [Using Altinity.Cloud to Log Sensor Data with ClickHouse Endpoints](https://altinity.com/blog/using-altinity-cloud-to-log-sensor-data-with-clickhouse-endpoints). The best way to reach us or ask questions about the code is:
 
 * Join [the Altinity Slack](https://altinity.com/slack) - Chat with the developers and other users 
 * Log [an issue on GitHub](https://github.com/Altinity/examples/issues) - Ask questions, log bugs and feature requests

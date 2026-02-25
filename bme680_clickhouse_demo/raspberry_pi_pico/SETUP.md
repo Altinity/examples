@@ -1,5 +1,7 @@
 # Setup Instructions - Pico WH BME680 Logger
 
+These are complete step-by-step instructions for setting up the BME680 sensor logger on the Raspberry Pi Pico to post data to ClickHouse via API Endpoints. This code accompanies the blog post [Using Altinity.Cloud to Log Sensor Data with ClickHouse® Endpoints](https://altinity.com/blog/using-altinity-cloud-to-log-sensor-data-with-clickhouse-endpoints) on [the Altinity blog](https://altinity.com/blog).
+
 ## Hardware Requirements
 
 - **Raspberry Pi Pico WH** (WiFi + pre-soldered headers)

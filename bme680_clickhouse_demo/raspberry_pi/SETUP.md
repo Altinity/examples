@@ -1,6 +1,6 @@
 # Setup Guide: BME680 Sensor Logger for Raspberry Pi
 
-Complete step-by-step instructions for setting up the BME680 sensor logger on Raspberry Pi to post data to ClickHouse via API Endpoints.
+These are complete step-by-step instructions for setting up the BME680 sensor logger on Raspberry Pi to post data to ClickHouse via API Endpoints. This code accompanies the blog post [Using Altinity.Cloud to Log Sensor Data with ClickHouse® Endpoints](https://altinity.com/blog/using-altinity-cloud-to-log-sensor-data-with-clickhouse-endpoints) on [the Altinity blog](https://altinity.com/blog).
 
 ## Table of Contents
 
@@ -112,7 +112,7 @@ Your full endpoint URL will be:
 
 This setup also works on:
 
-- Nvidia Jetson Nano (see Appendix B in the blog post for details)
+- Nvidia Jetson Nano (see [Appendix B in the blog post](https://altinity.com/blog/using-altinity-cloud-to-log-sensor-data-with-clickhouse-endpoints/#urge-overkill) for details)
 - Nvidia Jetson Orin Nano (untested but should work)
 
 ---

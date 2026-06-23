@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+  taxidemo — Demo of API endpoints on taxi data (tripdata database).
+
+  Assets served:
+    /taxidemo                 → file://taxidemo/index.html (taxidemo HTML)
+    /taxidemo/assets/index.js → file://taxidemo/assets/index.js (taxidemo JS bundle)
+-->
+<clickhouse>
+    <http_handlers>
+        <rule name="taxidemo-html">
+            <url>regex:^/taxidemo$</url>
+            <methods>GET</methods>
+            <handler>
+                <type>static</type>
+                <content_type>text/html; charset=UTF-8</content_type>
+                <response_content>file://taxidemo/index.html</response_content>
+            </handler>
+        </rule>
+
+        <rule name="taxidemo-assets-js">
+            <url>regex:^/taxidemo/assets/index.js$</url>
+            <methods>GET</methods>
+            <handler>
+                <type>static</type>
+                <content_type>application/javascript; charset=UTF-8</content_type>
+                <response_content>file://taxidemo/assets/index.js</response_content>
+            </handler>
+        </rule>
+
+        <!-- <defaults/> anchored here — must be last across all config.d files. -->
+        <defaults/>
+    </http_handlers>
+</clickhouse>

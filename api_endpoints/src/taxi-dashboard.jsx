@@ -3,7 +3,7 @@ import { PieChart, Pie, Cell, BarChart, Bar, LineChart, Line, XAxis, YAxis, Tool
 import { Clock, DollarSign, MapPin } from 'lucide-react';
 
 // Use Vite proxy for development (bypasses SSL certificate issues)
-const API_BASE_URL = '/api';
+const API_BASE_URL = '';
 const API_USERNAME = import.meta.env.VITE_CLICKHOUSE_USERNAME || 'probably_not_admin';
 const API_PASSWORD = import.meta.env.VITE_CLICKHOUSE_PASSWORD || 'password_goes_here';
 
@@ -104,16 +104,25 @@ const TaxiDashboard = () => {
   };
 
   useEffect(() => {
-    fetchRushHourData();
+    const timer = setTimeout(() => {
+      fetchRushHourData();
+    }, 300);
+    return () => clearTimeout(timer);
   }, [timeRange]);
 
   useEffect(() => {
-    fetchTipData();
+    const timer = setTimeout(() => {
+      fetchTipData();
+    }, 300);
+    return () => clearTimeout(timer);
   }, [distanceRange]);
 
   useEffect(() => {
-    fetchRouteData();
-  }, [topN, borough]); // Fetch when either topN or borough changes
+    const timer = setTimeout(() => {
+      fetchRouteData();
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [topN, borough]);
 
   const formatHour = (hour) => {
     if (hour === 0) return '12 AM';
@@ -171,7 +180,7 @@ const TaxiDashboard = () => {
             fontWeight: 400,
             letterSpacing: '0.05em'
           }}>
-              REAL-TIME ANALYTICS DASHBOARD • AUGUST–OCTOBER 2025
+              REAL-TIME ANALYTICS DASHBOARD • JANUARY–DECEMBER 2023
 	      <br />
 	      POWERED BY ClickHouse® API ENDPOINTS SERVED BY ALTINITY.CLOUD®
           </p>

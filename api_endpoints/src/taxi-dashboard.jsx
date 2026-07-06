@@ -104,16 +104,25 @@ const TaxiDashboard = () => {
   };
 
   useEffect(() => {
-    fetchRushHourData();
+    const timer = setTimeout(() => {
+      fetchRushHourData();
+    }, 300);
+    return () => clearTimeout(timer);
   }, [timeRange]);
 
   useEffect(() => {
-    fetchTipData();
+    const timer = setTimeout(() => {
+      fetchTipData();
+    }, 300);
+    return () => clearTimeout(timer);
   }, [distanceRange]);
 
   useEffect(() => {
-    fetchRouteData();
-  }, [topN, borough]); // Fetch when either topN or borough changes
+    const timer = setTimeout(() => {
+      fetchRouteData();
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [topN, borough]);
 
   const formatHour = (hour) => {
     if (hour === 0) return '12 AM';
